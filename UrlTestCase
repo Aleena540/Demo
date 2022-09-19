@@ -1,0 +1,211 @@
+package TestNGPackage;
+
+import org.testng.annotations.Test;
+
+import Utility.WebDriverUtility;
+
+import org.testng.annotations.BeforeTest;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+import org.testng.annotations.AfterTest;
+
+public class UrlTestCase extends WebDriverUtility{
+  @Test(priority=1,enabled=true)
+  public void f() {
+	  //url verification
+	    String myurl = "https://www.saucedemo.com/"; 	
+		String applicationurl =  driver.getCurrentUrl();
+		Boolean status;
+		 if(myurl.equals(applicationurl)) 
+		{ 		
+			System.out.println("passed"); 	
+			status=true;
+			}else
+			{ 			 
+				System.out.println("failed");  
+				status=false;
+				} 
+		 Assert.assertTrue(status, "Assertion failed for url verification");
+	
+  }
+  @Test(priority=2, enabled=true)
+  public void g() throws InterruptedException {
+	  
+	  //login
+	  String username="standard_user";
+	  String password="secret_sauce";
+	  sendkeys(By.id("user-name"),username);
+	  Thread.sleep(4000);
+	  sendkeys(By.id("password"),password);
+	  Thread.sleep(4000);
+	  click(By.id("login-button"));
+	  
+	  //after login url verification
+	  String inner_url="https://www.saucedemo.com/inventory.html";
+	  String get_url =  driver.getCurrentUrl();
+	  Boolean status_login;
+		 if(inner_url.equals(get_url)) 
+		{ 		
+			System.out.println("passed"); 	
+			status_login=true;
+			}else
+			{ 			 
+				System.out.println("failed");  
+				status_login=false;
+				} 
+		 Assert.assertTrue(status_login, "Assertion failed for url verification");
+  }
+	
+		 
+		 
+  @Test(priority=3, enabled=true)
+  public void h() throws InterruptedException {
+	  
+	click(By.id("item_4_title_link"));
+	Thread.sleep(4000);
+	click(By.id("add-to-cart-sauce-labs-backpack"));
+	Thread.sleep(4000);
+	click(By.id("back-to-products"));
+	Thread.sleep(4000);
+	click(By.id("item_0_title_link"));
+	Thread.sleep(4000);
+	click(By.id("add-to-cart-sauce-labs-bike-light"));
+	
+	}
+  @Test(priority=4, enabled=true)
+  public void i() throws InterruptedException {	 
+	  
+	click(By.className("shopping_cart_link"));
+	Thread.sleep(4000);
+	
+	//cart url verification
+	String cart_url="https://www.saucedemo.com/cart.html";
+    String get_cart_url=driver.getCurrentUrl();
+    Boolean status_cart;
+	 if(cart_url.equals(get_cart_url)) 
+	{ 		
+		System.out.println("passed"); 	
+		status_cart=true;
+		}else
+		{ 			 
+			System.out.println("failed");  
+			status_cart=false;
+			} 
+	 Assert.assertTrue(status_cart, "Assertion failed for cart url verification");
+
+  }
+  @Test(priority=5, enabled=true)
+  public void j() throws InterruptedException {	
+	  click(By.id("continue-shopping"));
+	  Thread.sleep(4000);
+	  click(By.id("item_0_title_link"));
+	  Thread.sleep(4000);
+	 // WebElement text = driver.findElement(By.xpath("//*[@id=\"inventory_item_container\"]/div/div/div[2]/div[2]"));
+	 // String actualtext = text.getText();
+	 // System.out.println(actualtext);
+	
+      }
+  
+  @Test(priority=6, enabled=true)
+  public void k() throws InterruptedException {
+	  
+      click(By.className("shopping_cart_link"));
+	  Thread.sleep(4000); 
+	  click(By.id("checkout"));
+	  
+	  //checkout url verification
+	    String checkout_url="https://www.saucedemo.com/checkout-step-one.html";
+	    String get_checkout_url=driver.getCurrentUrl();
+	    Boolean status_checkout;
+		 if(checkout_url.equals(get_checkout_url)) 
+		{ 		
+			System.out.println("Passed"); 	
+			status_checkout=true;
+			}else
+			{ 			 
+				System.out.println("Failed");  
+				status_checkout=false;
+				} 
+		 Assert.assertTrue(status_checkout, "Assertion failed for checkout url verification");
+
+	  
+	  String firstName="ALEENA";
+      String lastName="KURIAKOSE";
+	  
+	  sendkeys(By.id("first-name"),firstName);
+	  Thread.sleep(4000); 
+	  sendkeys(By.id("last-name"),lastName);
+	  Thread.sleep(4000); 
+	  sendkeys(By.id("postal-code"),"686001");
+	  Thread.sleep(4000); 
+	  click(By.id("continue"));
+	  Thread.sleep(4000); 
+	      	
+	  //purchase url verification
+	        String purchase_url="https://www.saucedemo.com/checkout-step-two.html";
+		    String get_purchase_url=driver.getCurrentUrl();
+		    Boolean status_purchase;
+			 if(purchase_url.equals(get_purchase_url)) 
+			{ 		
+				System.out.println("Passed"); 	
+				status_purchase=true;
+				}else
+				{ 			 
+					System.out.println("Failed");  
+					status_purchase=false;
+					} 
+			 Assert.assertTrue(status_purchase, "Assertion failed for purchase url verification");
+			
+			 //Product details validating
+			 
+			 WebElement product_name = driver.findElement(By.xpath("//*[@id=\"item_0_title_link\"]"));
+			 String actual_product_name= product_name.getText();
+			 System.out.println(actual_product_name);
+			 
+			 WebElement product_description = driver.findElement(By.xpath("//*[@id=\"checkout_summary_container\"]/div/div[1]/div[3]/div[2]/div[1]"));
+			 String actual_product_description=product_description.getText();
+			 System.out.println(actual_product_description);
+			 
+			 // Delivery details validating
+			 WebElement payment_info = driver.findElement(By.xpath("//*[@id=\"checkout_summary_container\"]/div/div[2]/div[2]"));
+			 String actual_payment_info= payment_info.getText();
+			 System.out.println(actual_payment_info);
+			 
+			 WebElement shipping_info = driver.findElement(By.xpath("//*[@id=\"checkout_summary_container\"]/div/div[2]/div[4]"));
+			 String actual_shipping_info= shipping_info.getText();
+			 System.out.println(actual_shipping_info);
+			 
+			 WebElement item_total = driver.findElement(By.xpath("//*[@id=\"checkout_summary_container\"]/div/div[2]/div[5]"));
+			 String actual_item_total= item_total.getText();
+			 System.out.println(actual_item_total);
+			 
+			 WebElement tax = driver.findElement(By.xpath("//*[@id=\"checkout_summary_container\"]/div/div[2]/div[6]"));
+			 String actual_tax= tax.getText();
+			 System.out.println(actual_tax);
+			 
+			 WebElement total = driver.findElement(By.xpath("//*[@id=\"checkout_summary_container\"]/div/div[2]/div[7]"));
+			 String actual_total= total.getText();
+			 System.out.println(actual_total);
+			 click(By.id("finish"));
+			 Thread.sleep(4000); 
+  }
+
+  @BeforeTest
+  public void beforeTest() 
+         {
+	    String driverpath="E:\\\\browser\\\\chromedriver.exe";
+		String url="https://www.saucedemo.com/";
+		launchBrowser(driverpath,url);
+		  }
+
+  @AfterTest
+  public void afterTest() {
+	  driver.close();
+  }
+
+}
